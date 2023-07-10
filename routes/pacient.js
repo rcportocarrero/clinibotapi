@@ -12,14 +12,8 @@ router.post('/find-pacient', async (req, res) => {
 if(data == false){
     res.status(404).send("data not found");
 }else{
-    if(data < 5){
-        res.send("Su familiar no se encuentra internado.");
-    }else if(data == 5){
-        res.send("Estado del paciente: En Emergencias");
-    }else if(data == 6){
-        res.send("El paciente ya se encuentra dado de alta");
-    }
-   
+    var msg = {status:data};
+  res.send(msg);   
 }
 });
 
@@ -39,6 +33,13 @@ router.post('/find-diagnostic', async (req, res) => {
      if(data == false){
         res.send("No se han formulado medicamentos")
      }
+     res.send(data);
+});
+router.post('/agendar-cita', async (req, res) => {
+    const {num_doc,tipo,dia,hora,payment_code} = req.body;
+
+     const data = await pacient.insertCita(num_doc,tipo,dia,hora,payment_code);
+ 
      res.send(data);
 });
 

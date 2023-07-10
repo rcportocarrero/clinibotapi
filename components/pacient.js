@@ -31,9 +31,17 @@ const getDiagnostic = async (dni)=>{
     if (rows.length > 0) return rows[0].symtoms;
     return false;
 }
+
+const insertCita = async (num_doc,tipo,dia,hora,payment_code)=>{
+    const connection = await createConnection();
+    const [rows] = await connection.execute(`INSERT INTO reservation (num_doc, title,date_at,time_at,payment_code) VALUES (?,?,?,?,?)`,[num_doc,tipo,dia,hora,payment_code]);
+    if (rows) return true;
+    return false;
+}
 module.exports= {
     getPacient,
     getRecipe,
-    getDiagnostic
+    getDiagnostic,
+    insertCita
 
 }
